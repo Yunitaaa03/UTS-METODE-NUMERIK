@@ -1,0 +1,30 @@
+import math
+
+# Parameter
+L = 0.5  # H
+C = 10e-6  # F
+f_target = 1000  # Hz
+tolerance = 0.1
+R0 = 50  # Tebakan awal
+
+# Fungsi untuk menghitung frekuensi resonansi berdasarkan R
+def frequency(R):
+    return 1 / (2 * math.pi * math.sqrt(L * C))
+
+# Fungsi untuk mencari selisih frekuensi
+def f(R):
+    return frequency(R) - f_target
+
+# Turunan dari fungsi f(R)
+def f_prime(R):
+    return -1 / (2 * math.pi * math.sqrt(L * C))
+
+# Metode Newton-Raphson
+R_n = R0
+while True:
+    R_next = R_n - f(R_n) / f_prime(R_n)
+    if abs(R_next - R_n) < tolerance:
+        break
+    R_n = R_next
+
+print("Nilai R yang ditemukan:", R_n)

@@ -1,0 +1,30 @@
+import math
+
+# Parameter
+L = 0.5  # H
+C = 10e-6  # F
+f_target = 1000  # Hz
+tolerance = 0.1
+lower_bound = 0
+upper_bound = 100
+
+# Fungsi untuk menghitung frekuensi resonansi berdasarkan R
+def frequency(R):
+    return 1 / (2 * math.pi * math.sqrt(L * C))
+
+# Fungsi untuk mencari selisih frekuensi
+def f(R):
+    return frequency(R) - f_target
+
+# Metode Biseksi
+while (upper_bound - lower_bound) / 2 > tolerance:
+    midpoint = (lower_bound + upper_bound) / 2
+    if f(midpoint) == 0:
+        break
+    elif f(lower_bound) * f(midpoint) < 0:
+        upper_bound = midpoint
+    else:
+        lower_bound = midpoint
+
+R_found = (lower_bound + upper_bound) / 2
+print("Nilai R yang ditemukan:", R_found)

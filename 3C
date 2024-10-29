@@ -1,0 +1,48 @@
+import numpy as np
+
+# Fungsi untuk menghitung R(T)
+def R(T):
+    return 5000 * np.exp(3500 / T - 1)
+
+# Metode selisih maju
+def forward_difference(T, h):
+    return (R(T + h) - R(T)) / h
+
+# Metode selisih mundur
+def backward_difference(T, h):
+    return (R(T) - R(T - h)) / h
+
+# Metode selisih tengah
+def central_difference(T, h):
+    return (R(T + h) - R(T - h)) / (2 * h)
+
+# Fungsi untuk menghitung turunan eksak dR/dT
+def exact_derivative(T):
+    return 5000 * np.exp(3500 / T - 1) * (-3500 / T**2)
+
+# Rentang temperatur
+T_values = np.arange(250, 360, 10)  # Dari 250K sampai 350K dengan interval 10K
+h = 1e-3  # Langkah kecil untuk metode selisih
+
+# Menyimpan hasil
+results = {
+    'Temperature (K)': [],
+    'Forward Difference': [],
+    'Backward Difference': [],
+    'Central Difference': [],
+    'Exact Derivative': []
+}
+
+# Menghitung turunan untuk setiap metode
+for T in T_values:
+    results['Temperature (K)'].append(T)
+    results['Forward Difference'].append(forward_difference(T, h))
+    results['Backward Difference'].append(backward_difference(T, h))
+    results['Central Difference'].append(central_difference(T, h))
+    results['Exact Derivative'].append(exact_derivative(T))
+
+# Menampilkan hasil
+import pandas as pd
+
+results_df = pd.DataFrame(results)
+print(results_df)

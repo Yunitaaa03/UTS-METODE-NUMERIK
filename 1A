@@ -1,0 +1,20 @@
+
+import numpy as np
+
+# Konstanta
+L = 0.5  # Induktansi dalam Henry
+C = 10e-6  # Kapasitansi dalam Farad
+pi = np.pi  # Nilai pi
+
+def f(R):
+    """Menghitung frekuensi resonansi f(R) berdasarkan nilai R."""
+    return (-R) / (4 * L * (2 * pi * L * C))
+
+def f_prime(R):
+    """Menghitung turunan f'(R) terhadap R."""
+    return -1 / (4 * L * (2 * pi * L * C))
+
+# Contoh penggunaan
+R = 10  # Misal resistansi sebesar 10 ohm
+print(f"f({R}) = {f(R):.2f} Hz")
+print(f"f'({R}) = {f_prime(R):.2f} Hz/Ohm")
